@@ -57,8 +57,8 @@ pipeline {
 	    stage('Copy report') {
 		    steps {
 			sh '''
-				docker run --rm -v zap_config:/app --name busbybox busybox
-		  		docker cp busbybox:/app/reports/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml
+				docker run --rm -v zap_config:/app --name busybox busybox sh -c "sleep 4000"
+		  		docker cp busybox:/app/reports/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml
 		 	'''
 		    }
 	    }
@@ -67,7 +67,7 @@ pipeline {
         always {
 			
             sh '''
-                docker stop zap juice-shop busbybox
+                docker stop zap juice-shop busybox
             '''
 	    defectDojoPublisher(artifact: '${WORKSPACE}/results/zap_xml_report.xml', 
                     productName: 'Juice Shop', 
