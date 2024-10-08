@@ -24,6 +24,12 @@ pipeline {
                 sh 'ls -l passive_scan.yaml'
             }
         }
+        stage('report dir creation') {
+            steps {
+                echo 'create directory for reports'
+                sh '${WORKSPACE}/results/'
+            }
+        }	    
         stage('check workspace') {
             steps {
                 echo 'checking if file exist'
@@ -51,11 +57,17 @@ pipeline {
     }
     post {
         always {
+	  steps {		
             sh '''
                 docker cp zap:/zap/wrk/zap_html_report.html ${WORKSPACE}/results/zap_html_report.html
                 docker cp zap:/zap/wrk/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml
                 docker stop zap juice-shop
             '''
+	    defectDojoPublisher(artifact: '${WORKSPACE}/results/zap_xml_report.xml', 
+                    productName: 'Juice Shop', 
+                    scanType: 'OSV Scan', 
+                    engagementName: 'krzysztof@odkrywca.eu')
+	  }
         }
     }	
 }
