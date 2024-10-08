@@ -57,7 +57,7 @@ pipeline {
     }
     post {
         always {
-	  steps {		
+			
             sh '''
                 docker cp zap:/zap/wrk/zap_html_report.html ${WORKSPACE}/results/zap_html_report.html
                 docker cp zap:/zap/wrk/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml
@@ -67,7 +67,7 @@ pipeline {
                     productName: 'Juice Shop', 
                     scanType: 'OSV Scan', 
                     engagementName: 'krzysztof@odkrywca.eu')
-	  }
+	  
         }
     }	
 }
