@@ -27,7 +27,7 @@ pipeline {
         stage('check workspace') {
             steps {
                 echo 'checking if file exist'
-                sh 'ls -l $WORKSPACE'
+                sh 'ls -l "$WORKSPACE"'
             }
         }		    
         stage('[ZAP] Baseline passive-scan') {
