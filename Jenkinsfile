@@ -21,13 +21,13 @@ pipeline {
         stage('[ZAP] Baseline passive-scan') {
 			steps {
 				sh '''
-					docker run --name juice-shop -d --rm \\
+					docker run --name juice-shop -d \\
 						-p 3000:3000 \\
 						bkimminich/juice-shop
 					sleep 5
 				'''
 				sh '''
-					docker run --name zap --rm \\
+					docker run --name zap  \\
 						--add-host=host.docker.internal:host-gateway \\
 						-v //c/Users/ziutus/git/kurs_devsecops_abc/passive_scan.yaml:/zap/wrk/:rw \\
 						-t ghcr.io/zaproxy/zaproxy:stable bash -c \\
