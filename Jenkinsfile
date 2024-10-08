@@ -21,7 +21,7 @@ pipeline {
         stage('Check file') {
             steps {
                 echo 'checking if file exist'
-                sh 'ls -l passive_scan.yml'
+                sh 'ls -l passive_scan.yaml'
             }
         }	    
         stage('[ZAP] Baseline passive-scan') {
