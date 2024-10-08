@@ -23,7 +23,13 @@ pipeline {
                 echo 'checking if file exist'
                 sh 'ls -l passive_scan.yaml'
             }
-        }	    
+        }
+        stage('check workspace') {
+            steps {
+                echo 'checking if file exist'
+                sh 'ls -l $WORKSPACE'
+            }
+        }		    
         stage('[ZAP] Baseline passive-scan') {
 			steps {
 				sh '''
