@@ -56,7 +56,7 @@ pipeline {
 	  //   }
 	    stage('Copy report') {
 		    steps {
-			ssh '''
+			sh '''
 				docker run --rm -v zap_config:/app --name busbybox busybox
 		  		docker cp busbybox:/app/reports/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml
 		 	'''
