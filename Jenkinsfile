@@ -36,32 +36,36 @@ pipeline {
                 sh 'ls -l "$WORKSPACE"'
             }
         }		    
-        stage('[ZAP] Baseline passive-scan') {
-			steps {
-				sh '''
-					docker run --name juice-shop -d \
-						-p 3000:3000 \
-						bkimminich/juice-shop
-					sleep 5
-				'''
-				sh '''
-					docker run --name zap  \
-						--add-host=host.docker.internal:host-gateway \
-						-v zap_config:/zap/wrk/:rw \
-						-t ghcr.io/zaproxy/zaproxy:stable bash -c \
-						"ls -l /zap/wrk/; zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive_scan.yaml" \
-						|| true
-				'''
-			}
+   //      stage('[ZAP] Baseline passive-scan') {
+			// steps {
+			// 	sh '''
+			// 		docker run --name juice-shop -d \
+			// 			-p 3000:3000 \
+			// 			bkimminich/juice-shop
+			// 		sleep 5
+			// 	'''
+			// 	sh '''
+			// 		docker run --name zap  \
+			// 			--add-host=host.docker.internal:host-gateway \
+			// 			-v zap_config:/zap/wrk/:rw \
+			// 			-t ghcr.io/zaproxy/zaproxy:stable bash -c \
+			// 			"ls -l /zap/wrk/; zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive_scan.yaml" \
+			// 			|| true
+			// 	'''
+			// }
+	  //   }
+	    stage('Copy report') {
+		ssh '''
+			docker run --rm -v zap_config:/app --name busbybox busybox
+	  		docker cp busbybox:/app/reports/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml
+	 	'''
 	    }
     }
     post {
         always {
 			
             sh '''
-                docker cp zap:/zap/wrk/zap_html_report.html ${WORKSPACE}/results/zap_html_report.html
-                docker cp zap:/zap/wrk/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml
-                docker stop zap juice-shop
+                docker stop zap juice-shop busbybox
             '''
 	    defectDojoPublisher(artifact: '${WORKSPACE}/results/zap_xml_report.xml', 
                     productName: 'Juice Shop', 
