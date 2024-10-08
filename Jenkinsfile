@@ -18,6 +18,12 @@ pipeline {
                 sh 'ls -la'
             }
         }
+        stage('Check file') {
+            steps {
+                echo 'checking if file exist'
+                sh 'ls -l /mnt/c/Users/ziutus/git/kurs_devsecops_abc/passive_scan.yml'
+            }
+        }	    
         stage('[ZAP] Baseline passive-scan') {
 			steps {
 				sh '''
