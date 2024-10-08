@@ -21,7 +21,7 @@ pipeline {
         stage('Check file') {
             steps {
                 echo 'checking if file exist'
-                sh 'ls -l /mnt/c/Users/ziutus/git/kurs_devsecops_abc/passive_scan.yml'
+                sh 'ls -l passive_scan.yml'
             }
         }	    
         stage('[ZAP] Baseline passive-scan') {
@@ -35,9 +35,9 @@ pipeline {
 				sh '''
 					docker run --name zap  \
 						--add-host=host.docker.internal:host-gateway \
-						-v /mnt/c/Users/ziutus/git/kurs_devsecops_abc/passive_scan.yml:/zap/wrk/:rw \
+						-v passive_scan.yaml:/zap/wrk/:rw \
 						-t ghcr.io/zaproxy/zaproxy:stable bash -c \
-						"zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive_scan.yml" \
+						"zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive_scan.yaml" \
 						|| true
 				'''
 			}
