@@ -27,7 +27,7 @@ pipeline {
         stage('report dir creation') {
             steps {
                 echo 'create directory for reports'
-                sh '${WORKSPACE}/results/'
+                sh 'mkdir ${WORKSPACE}/results/'
             }
         }	    
         stage('check workspace') {
