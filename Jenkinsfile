@@ -75,6 +75,6 @@ pipeline {
      //                scanType: 'OSV Scan', 
      //                engagementName: 'krzysztof@odkrywca.eu')
 	  
-     //    }
+      }
     }	
 }
