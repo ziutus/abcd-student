@@ -37,13 +37,13 @@ pipeline {
             }
         }		    
 
-        stage('[OSV-Scanner] scan') {
-			steps {
-				sh '''
-				  osv-scanner scan --lockfile package-lock.json --output osv-scanner-output.txt || true
-				'''
-			}
-	}
+ //        stage('[OSV-Scanner] scan') {
+	// 		steps {
+	// 			sh '''
+	// 			  osv-scanner scan --lockfile package-lock.json --output osv-scanner-output.txt || true
+	// 			'''
+	// 		}
+	// }
 
 	    
  //        stage('[trufflehog] scan') {
@@ -94,10 +94,10 @@ pipeline {
             '''
 		// docker stop busybox
 		// docker stop trufflehog
-		defectDojoPublisher(artifact: 'osv-scanner-output.txt', 
-		    productName: 'Juice Shop', 
-		    scanType: 'OSV Scan', 
-		    engagementName: 'krzysztof@odkrywca.eu')
+		// defectDojoPublisher(artifact: 'osv-scanner-output.txt', 
+		//     productName: 'Juice Shop', 
+		//     scanType: 'OSV Scan', 
+		//     engagementName: 'krzysztof@odkrywca.eu')
       }
     }	
 }
