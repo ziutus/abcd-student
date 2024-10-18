@@ -86,10 +86,10 @@ pipeline {
             '''
 		// docker stop busybox
 		// docker stop trufflehog
-		// defectDojoPublisher(artifact: '${WORKSPACE}/results/zap_xml_report.xml', 
-     //                productName: 'Juice Shop', 
-     //                scanType: 'OSV Scan', 
-     //                engagementName: 'krzysztof@odkrywca.eu')
+		defectDojoPublisher(artifact: 'trufflehog_errors.txt', 
+		    productName: 'Juice Shop', 
+		    scanType: 'OSV Scan', 
+		    engagementName: 'krzysztof@odkrywca.eu')
 	  
       }
     }	
