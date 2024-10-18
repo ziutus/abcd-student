@@ -42,8 +42,8 @@ pipeline {
 				sh '''
 					docker run --rm --name trufflehog  \
 						trufflesecurity/trufflehog:latest \
-						 git  file://. --only-verified --bare > trufflehog.txt
-       					cat trufflehog.txt
+						 git  file://. --only-verified --bare 2&1> trufflehog.txt
+       
 				'''
 			}
 	}
@@ -80,10 +80,11 @@ pipeline {
         always {
                 
             sh '''
-      		docker stop trufflehog		
+		cat trufflehog.txt
             '''
 		// docker stop busybox
-	    // defectDojoPublisher(artifact: '${WORKSPACE}/results/zap_xml_report.xml', 
+		// docker stop trufflehog
+		// defectDojoPublisher(artifact: '${WORKSPACE}/results/zap_xml_report.xml', 
      //                productName: 'Juice Shop', 
      //                scanType: 'OSV Scan', 
      //                engagementName: 'krzysztof@odkrywca.eu')
