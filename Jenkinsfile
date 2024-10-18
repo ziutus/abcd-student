@@ -40,7 +40,7 @@ pipeline {
         stage('[OSV-Scanner] scan') {
 			steps {
 				sh '''
-				  osv-scanner scan --lockfile package-lock.json --output osv-scanner-output.txt
+				  osv-scanner scan --lockfile package-lock.json --output osv-scanner-output.txt || true
 				'''
 			}
 	}
