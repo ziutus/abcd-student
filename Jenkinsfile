@@ -81,6 +81,8 @@ pipeline {
                 
             sh '''
 		ls -l trufflehog*
+  		cat trufflehog_errors.txt
+    		cat trufflehog.txt
             '''
 		// docker stop busybox
 		// docker stop trufflehog
