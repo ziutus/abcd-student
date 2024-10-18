@@ -42,7 +42,7 @@ pipeline {
 				sh '''
 					docker run --rm --name trufflehog  \
 						trufflesecurity/trufflehog:latest \
-						 git  file://. --only-verified --bare 2&1> trufflehog.txt
+						 git  file://. --only-verified --bare 2>trufflehog_errors.txt > trufflehog.txt
        
 				'''
 			}
@@ -80,7 +80,7 @@ pipeline {
         always {
                 
             sh '''
-		cat trufflehog.txt
+		ls -l trufflehog*
             '''
 		// docker stop busybox
 		// docker stop trufflehog
