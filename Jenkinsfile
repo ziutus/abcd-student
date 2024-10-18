@@ -42,8 +42,8 @@ pipeline {
 				sh  'mkdir /data'
 				sh '''
 					docker run --name trufflehog  \
+     						-v zap_config:/data/:rw \
 						trufflesecurity/trufflehog:latest \
-						-v zap_config:/data/:rw \
 						 git  file://. --only-verified --bare
 				'''
 			}
