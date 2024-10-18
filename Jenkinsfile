@@ -40,10 +40,7 @@ pipeline {
         stage('[OSV-Scanner] scan') {
 			steps {
 				sh '''
-					docker run --rm --name openvas-scanner  \
-						greenbone/openvas-scanner \
-						 scan --lockfile package-lock.json
-       
+				  osv-scanner scan --lockfile package-lock.json
 				'''
 			}
 	}
