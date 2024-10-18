@@ -39,10 +39,8 @@ pipeline {
 
         stage('[trufflehog] scan') {
 			steps {
-				sh  'mkdir /data'
 				sh '''
 					docker run --name trufflehog  \
-     						-v zap_config:/data/:rw \
 						trufflesecurity/trufflehog:latest \
 						 git  file://. --only-verified --bare
 				'''
