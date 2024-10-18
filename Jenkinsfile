@@ -89,7 +89,8 @@ pipeline {
         always {
                 
             sh '''
-		ls -l
+		ls -l osv-scanner-output.txt
+  		cat osv-scanner-output.txt
             '''
 		// docker stop busybox
 		// docker stop trufflehog
