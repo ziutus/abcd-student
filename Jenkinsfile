@@ -40,9 +40,10 @@ pipeline {
         stage('[trufflehog] scan') {
 			steps {
 				sh '''
-					docker run --name trufflehog  \
+					docker run --rm --name trufflehog  \
 						trufflesecurity/trufflehog:latest \
-						 git  file://. --only-verified --bare
+						 git  file://. --only-verified --bare > trufflehog.txt
+       					cat trufflehog.txt
 				'''
 			}
 	}
