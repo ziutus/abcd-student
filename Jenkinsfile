@@ -94,11 +94,10 @@ pipeline {
             '''
 		// docker stop busybox
 		// docker stop trufflehog
-		// defectDojoPublisher(artifact: 'trufflehog_errors.txt', 
-		//     productName: 'Juice Shop', 
-		//     scanType: 'OSV Scan', 
-		//     engagementName: 'krzysztof@odkrywca.eu')
-	  
+		defectDojoPublisher(artifact: 'osv-scanner-output.txt', 
+		    productName: 'Juice Shop', 
+		    scanType: 'OSV Scan', 
+		    engagementName: 'krzysztof@odkrywca.eu')
       }
     }	
 }
