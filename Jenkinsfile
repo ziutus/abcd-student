@@ -39,12 +39,12 @@ pipeline {
 
         stage('[trufflehog] scan') {
 			steps {
+				ssh mkdir /data
 				sh '''
 					docker run --name trufflehog  \
 						trufflesecurity/trufflehog:latest \
 						-v zap_config:/data/:rw \
-						 git  file://. --only-verified --bare > /data/report.txt \
-						|| true
+						 git  file://. --only-verified --bare
 				'''
 			}
 	}
@@ -82,8 +82,9 @@ pipeline {
                 
             sh '''
 	    	docker stop zap juice-shop 
-		docker stop busybox
+		
             '''
+		// docker stop busybox
 	    // defectDojoPublisher(artifact: '${WORKSPACE}/results/zap_xml_report.xml', 
      //                productName: 'Juice Shop', 
      //                scanType: 'OSV Scan', 
