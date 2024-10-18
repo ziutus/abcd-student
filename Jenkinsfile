@@ -39,7 +39,7 @@ pipeline {
 
         stage('[trufflehog] scan') {
 			steps {
-				ssh mkdir /data
+				sh  'mkdir /data'
 				sh '''
 					docker run --name trufflehog  \
 						trufflesecurity/trufflehog:latest \
