@@ -47,6 +47,7 @@ pipeline {
 						|| true
 				'''
 			}
+	}
 	    
 	    
 	    //      stage('[ZAP] Baseline passive-scan') {
