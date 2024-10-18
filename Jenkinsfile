@@ -37,16 +37,28 @@ pipeline {
             }
         }		    
 
-        stage('[trufflehog] scan') {
+        stage('[OSV-Scanner] scan') {
 			steps {
 				sh '''
-					docker run --rm --name trufflehog  \
-						trufflesecurity/trufflehog:latest \
-						 git  file://. --only-verified --bare 2>trufflehog_errors.txt > trufflehog.txt
+					docker run --rm --name openvas-scanner  \
+						greenbone/openvas-scanner \
+						 scan --lockfile package-lock.json
        
 				'''
 			}
 	}
+
+	    
+ //        stage('[trufflehog] scan') {
+	// 		steps {
+	// 			sh '''
+	// 				docker run --rm --name trufflehog  \
+	// 					trufflesecurity/trufflehog:latest \
+	// 					 git  file://. --only-verified --bare 2>trufflehog_errors.txt > trufflehog.txt
+       
+	// 			'''
+	// 		}
+	// }
 	    
 	    
 	    //      stage('[ZAP] Baseline passive-scan') {
@@ -80,9 +92,7 @@ pipeline {
         always {
                 
             sh '''
-		ls -l trufflehog*
-  		cat trufflehog_errors.txt
-    		cat trufflehog.txt
+		ls -l
             '''
 		// docker stop busybox
 		// docker stop trufflehog
