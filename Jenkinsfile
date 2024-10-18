@@ -79,8 +79,7 @@ pipeline {
         always {
                 
             sh '''
-	    	docker stop zap juice-shop 
-		
+      		docker stop trufflehog		
             '''
 		// docker stop busybox
 	    // defectDojoPublisher(artifact: '${WORKSPACE}/results/zap_xml_report.xml', 
