@@ -36,32 +36,45 @@ pipeline {
                 sh 'ls -l "$WORKSPACE"'
             }
         }		    
-        stage('[ZAP] Baseline passive-scan') {
+
+        stage('[trufflehog] scan') {
 			steps {
 				sh '''
-					docker run --name juice-shop -d \
-						-p 3000:3000 \
-						bkimminich/juice-shop
-					sleep 5
-				'''
-				sh '''
-					docker run --name zap  \
-						--add-host=host.docker.internal:host-gateway \
-						-v zap_config:/zap/wrk/:rw \
-						-t ghcr.io/zaproxy/zaproxy:stable bash -c \
-						"ls -l /zap/wrk/; zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive_scan.yaml" \
+					docker run --name trufflehog  \
+						trufflesecurity/trufflehog:latest \
+						-v zap_config:/data/:rw \
+						 git  file://. --only-verified --bare > /data/report.txt \
 						|| true
 				'''
 			}
-	     }
-	    stage('Copy report') {
-		    steps {
-			sh '''
-				docker run --rm -d -v zap_config:/app --name busybox busybox sh -c "sleep 4000"
-		  		docker cp busybox:/app/reports/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml
-		 	'''
-		    }
-	    }
+	    
+	    
+	    //      stage('[ZAP] Baseline passive-scan') {
+			// steps {
+			// 	sh '''
+			// 		docker run --name juice-shop -d \
+			// 			-p 3000:3000 \
+			// 			bkimminich/juice-shop
+			// 		sleep 5
+			// 	'''
+			// 	sh '''
+			// 		docker run --name zap  \
+			// 			--add-host=host.docker.internal:host-gateway \
+			// 			-v zap_config:/zap/wrk/:rw \
+			// 			-t ghcr.io/zaproxy/zaproxy:stable bash -c \
+			// 			"ls -l /zap/wrk/; zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive_scan.yaml" \
+			// 			|| true
+			// 	'''
+			// }
+	  //    }
+	  //   stage('Copy report') {
+		 //    steps {
+			// sh '''
+			// 	docker run --rm -d -v zap_config:/app --name busybox busybox sh -c "sleep 4000"
+		 //  		docker cp busybox:/app/reports/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml
+		 // 	'''
+		 //    }
+	  //   }
     }
     post {
         always {
