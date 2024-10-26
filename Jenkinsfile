@@ -37,6 +37,16 @@ pipeline {
             }
         }		    
 
+        stage('Semgrep Scan') {
+            steps {
+                echo 'Running Semgrep scan'
+                sh """
+                    semgrep --config=auto --output ${WORKSPACE}/results/semgrep-report.json
+                    """
+            }
+        }    
+	    
+	    
  //        stage('[OSV-Scanner] scan') {
 	// 		steps {
 	// 			sh '''
