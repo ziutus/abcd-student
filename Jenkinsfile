@@ -99,15 +99,15 @@ pipeline {
         always {
                 
             sh '''
-		ls -l osv-scanner-output.txt
-  		cat osv-scanner-output.txt
+		ls -l /zap/wrk/results/semgrep-report.json
+
             '''
 		// docker stop busybox
 		// docker stop trufflehog
-		// defectDojoPublisher(artifact: 'osv-scanner-output.txt', 
-		//     productName: 'Juice Shop', 
-		//     scanType: 'OSV Scan', 
-		//     engagementName: 'krzysztof@odkrywca.eu')
+		defectDojoPublisher(artifact: '/zap/wrk/results/semgrep-report.json', 
+		    productName: 'Juice Shop', 
+		    scanType: 'OSV Scan', 
+		    engagementName: 'krzysztof@odkrywca.eu')
       }
     }	
 }
