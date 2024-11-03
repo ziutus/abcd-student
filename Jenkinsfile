@@ -110,15 +110,14 @@ pipeline {
         always {
                 
             sh '''
-		ls -l /zap/wrk/passive_scan.yaml
-
+				ls -l /zap/wrk/passive_scan.yaml
+				docker stop busybox
             '''
-		docker stop busybox
 		// docker stop trufflehog
 		// defectDojoPublisher(artifact: '/zap/wrk/results/semgrep-report.json', 
 		//     productName: 'Juice Shop', 
 		//     scanType: 'Semgrep JSON Report', 
 		//     engagementName: 'krzysztof@odkrywca.eu')
        }
-    }	
+    }
 }
