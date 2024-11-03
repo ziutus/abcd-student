@@ -90,20 +90,25 @@ pipeline {
 						-t ghcr.io/zaproxy/zaproxy:stable bash -c \
 						"ls -l /zap/wrk/; zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive_scan.yaml" \
 						|| true
-				'''
-				defectDojoPublisher(artifact: '/app/reports/zap_xml_report.xml', 
-				    productName: 'Juice Shop', 
-				    scanType: 'ZAP Scan', 
-				    engagementName: 'krzysztof@odkrywca.eu')				
+				'''			
 			}
 	    }
-	    stage('Copy report') {
+	    stage('Copy ZAP report') {
 		    steps {
 			sh '''
 				docker run --rm -d -v zap_config:/app --name busybox busybox sh -c "sleep 4000"
 		  		docker cp busybox:/app/reports/zap_xml_report.xml ${WORKSPACE}/results/zap_xml_report.xml
 		 	'''
 		    }
+	    }
+
+	    stage('upload ZAP report') {
+		  steps {
+				defectDojoPublisher(artifact: '${WORKSPACE}/results/zap_xml_report.xml', 
+				    productName: 'Juice Shop', 
+				    scanType: 'ZAP Scan', 
+				    engagementName: 'krzysztof@odkrywca.eu')	
+		  }
 	    }
     }
     post {
