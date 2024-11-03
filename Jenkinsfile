@@ -115,6 +115,6 @@ pipeline {
 		//     productName: 'Juice Shop', 
 		//     scanType: 'Semgrep JSON Report', 
 		//     engagementName: 'krzysztof@odkrywca.eu')
-  //     }
+       }
     }	
 }
