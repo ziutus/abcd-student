@@ -41,7 +41,7 @@ pipeline {
             steps {
                 echo 'Running Semgrep scan'
                 sh """
-                    semgrep --config=auto --output /zap/wrk/results/semgrep-report.json
+                    semgrep --config=auto --json --output /zap/wrk/results/semgrep-report.json
                     """
             }
         }    
