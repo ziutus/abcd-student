@@ -56,16 +56,23 @@ pipeline {
 	// }
 
 	    
- //        stage('[trufflehog] scan') {
-	// 		steps {
-	// 			sh '''
-	// 				docker run --rm --name trufflehog  \
-	// 					trufflesecurity/trufflehog:latest \
-	// 					 git  file://. --only-verified --bare 2>trufflehog_errors.txt > trufflehog.txt
+        stage('[trufflehog] scan') {
+			steps {
+				sh '''
+					docker run --rm --name trufflehog  \
+						trufflesecurity/trufflehog:latest \
+						 git  file://. --only-verified --bare --json 2>trufflehog_errors.txt > /zap/wrk/results/trufflehog.json
        
-	// 			'''
-	// 		}
-	// }
+				'''
+				defectDojoPublisher(artifact: '/zap/wrk/results/trufflehog.json', 
+				    productName: 'Juice Shop', 
+				    scanType: 'Trufflehog Scan', 
+				    engagementName: 'krzysztof@odkrywca.eu')
+			
+			}
+	}
+
+
 	    
 	    
 	    //      stage('[ZAP] Baseline passive-scan') {
@@ -104,10 +111,10 @@ pipeline {
             '''
 		// docker stop busybox
 		// docker stop trufflehog
-		defectDojoPublisher(artifact: '/zap/wrk/results/semgrep-report.json', 
-		    productName: 'Juice Shop', 
-		    scanType: 'Semgrep JSON Report', 
-		    engagementName: 'krzysztof@odkrywca.eu')
-      }
+		// defectDojoPublisher(artifact: '/zap/wrk/results/semgrep-report.json', 
+		//     productName: 'Juice Shop', 
+		//     scanType: 'Semgrep JSON Report', 
+		//     engagementName: 'krzysztof@odkrywca.eu')
+  //     }
     }	
 }
