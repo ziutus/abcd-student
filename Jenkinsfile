@@ -96,7 +96,7 @@ pipeline {
 				    scanType: 'ZAP Scan', 
 				    engagementName: 'krzysztof@odkrywca.eu')				
 			}
-	  //    }
+	    }
 	    stage('Copy report') {
 		    steps {
 			sh '''
