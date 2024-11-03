@@ -93,7 +93,7 @@ pipeline {
 				'''
 				defectDojoPublisher(artifact: '/zap/wrk/results/semgrep-report.json', 
 				    productName: 'Juice Shop', 
-				    scanType: ''ZAP Scan', 
+				    scanType: 'ZAP Scan', 
 				    engagementName: 'krzysztof@odkrywca.eu')				
 			}
 	  //    }
