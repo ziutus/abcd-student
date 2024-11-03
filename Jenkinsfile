@@ -106,7 +106,7 @@ pipeline {
 		// docker stop trufflehog
 		defectDojoPublisher(artifact: '/zap/wrk/results/semgrep-report.json', 
 		    productName: 'Juice Shop', 
-		    scanType: 'OSV Scan', 
+		    scanType: 'Semgrep JSON Report', 
 		    engagementName: 'krzysztof@odkrywca.eu')
       }
     }	
