@@ -91,7 +91,7 @@ pipeline {
 						"ls -l /zap/wrk/; zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive_scan.yaml" \
 						|| true
 				'''
-				defectDojoPublisher(artifact: '/zap/wrk/results/semgrep-report.json', 
+				defectDojoPublisher(artifact: '/app/reports/zap_xml_report.xml', 
 				    productName: 'Juice Shop', 
 				    scanType: 'ZAP Scan', 
 				    engagementName: 'krzysztof@odkrywca.eu')				
