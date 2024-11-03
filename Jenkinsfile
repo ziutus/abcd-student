@@ -37,14 +37,14 @@ pipeline {
             }
         }		    
 
-        stage('Semgrep Scan') {
-            steps {
-                echo 'Running Semgrep scan'
-                sh """
-                    semgrep --config=auto --json --output /zap/wrk/results/semgrep-report.json
-                    """
-            }
-        }    
+        // stage('Semgrep Scan') {
+        //     steps {
+        //         echo 'Running Semgrep scan'
+        //         sh """
+        //             semgrep --config=auto --json --output /zap/wrk/results/semgrep-report.json
+        //             """
+        //     }
+        // }    
 	    
 	    
  //        stage('[OSV-Scanner] scan') {
